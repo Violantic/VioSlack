@@ -1,5 +1,6 @@
 package me.violantic.api.slack;
 
+
 import me.violantic.api.slack.api.Slack;
 
 /**
@@ -17,7 +18,7 @@ public class SlackAPI {
     }
 
     private static void init() {
-        slack = new Slack("VioBot");
+        slack = new Slack("VioBot", "tesing-key-here", "Violantic");
     }
 
 }

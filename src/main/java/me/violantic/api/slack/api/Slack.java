@@ -13,11 +13,13 @@ import java.net.URL;
 public class Slack {
 
     public String user;
-    public String webhook_url = "https://hooks.slack.com/services/<id goes here>";
-    public String avatar_url = "https://minotar.net/helm/Violantic/150.png";
+    public String webhook_url;
+    public String avatar_url = "https://minotar.net/helm/{user}/150.png";
 
-    public Slack(String user) {
+    public Slack(String user, String key, String displayUser) {
         this.user = user;
+        this.webhook_url = "https://hooks.slack.com/services/" + key;
+        avatar_url.replace("{user}", displayUser);
     }
 
     public String getUser() {
@@ -32,9 +34,6 @@ public class Slack {
             jsonObject.put("username", getUser());
             jsonObject.put("icon_url", avatar_url);
 
-            new Thread() {
-                @Override
-                public void run() {
                     try {
                         HttpsURLConnection huc = (HttpsURLConnection) (new URL(webhook_url)).openConnection();
                         huc.setRequestMethod("POST");
@@ -62,9 +61,6 @@ public class Slack {
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }
-
-                }
-            }.start();
         } catch (JSONException e2) {
             e2.printStackTrace();
         }
